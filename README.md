@@ -1,6 +1,6 @@
 # QianMo
 
-This routine is used to classify tracks. The core part is to calculate the minimum common subsequence of the trajectory code.All trajectories eventually generate a trajectory family tree.
+This routine is used to cluster tracks.The core part is to calculate the minimum common subsequence of the trajectory code.All trajectories eventually generate a trajectory family tree.
 
 ![img](img/71to20.png)
 
