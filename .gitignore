@@ -8,6 +8,8 @@
 *.user
 *.userosscache
 *.sln.docstates
+Geolife Trajectories*/
+test/QianMo.ConsoleApp/img/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
