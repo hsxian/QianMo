@@ -1,6 +1,7 @@
 using System;
+using QianMo.Core.Models;
 
-namespace QianMo.Core.Models
+namespace QianMo.ConsoleApp.Models
 {
     public class GeoInfoModel:IGeoInfoModel
     {

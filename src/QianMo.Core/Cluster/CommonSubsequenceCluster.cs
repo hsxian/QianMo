@@ -66,7 +66,7 @@ namespace QianMo.Core.Cluster
                 {
                     var sib = node.Siblings.ElementAt(j);
                     sib.Level = level;
-                    sib.LevelTag = $"{node.LevelTag}__{j}_sim";
+                    sib.LevelTag = $"{node.LevelTag}__sim_{j}";
                 }
 
                 SetClusterTreeLevelInfo(node.Children, level + 1, $"{node.LevelTag}_");

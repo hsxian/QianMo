@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using QianMo.Core.Infrastructure;
+using QianMo.ConsoleApp.Models;
 using QianMo.Core.Models;
 
 namespace QianMo.ConsoleApp
@@ -58,6 +58,7 @@ namespace QianMo.ConsoleApp
                     result.GeoPoints.Add(point);
                 }
             }
+
             return result;
         }
     }
