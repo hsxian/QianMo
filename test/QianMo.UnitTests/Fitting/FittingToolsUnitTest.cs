@@ -40,7 +40,7 @@ namespace QianMo.UnitTests.Fitting
         [Fact]
         public void TestFittingCircleWithLeastSquaresWhereMajorArc()
         {
-            var fitting = new FittingTools();
+            var fitting = new FittingTool();
             const int takeCount = (int) (PointCount * 0.6);
             var circle = fitting.FittingCircleWithLeastSquares(Points.Take(takeCount).ToArray());
             Assert.Equal(circle.X, X0, 1);
@@ -51,7 +51,7 @@ namespace QianMo.UnitTests.Fitting
         [Fact]
         public void TestFittingCircleWithLeastSquaresWhereMinorArc()
         {
-            var fitting = new FittingTools();
+            var fitting = new FittingTool();
             var takeCount = (int) (PointCount * 0.1);
             takeCount = takeCount < 3 ? 3 : takeCount;
             var circle = fitting.FittingCircleWithLeastSquares(Points.Take(takeCount).ToArray());
@@ -63,7 +63,7 @@ namespace QianMo.UnitTests.Fitting
         [Fact]
         public void TestFittingCircleWithRansacWhereMajorArc()
         {
-            var fitting = new FittingTools();
+            var fitting = new FittingTool();
             const int takeCount = (int) (PointCount * 0.6);
             var circle = fitting.FittingCircleWithRansac(Points.Take(takeCount).ToArray());
             Assert.Equal(circle.X, X0, 1);
@@ -74,7 +74,7 @@ namespace QianMo.UnitTests.Fitting
         [Fact]
         public void TestFittingCircleWithRansacWhereMinorArc()
         {
-            var fitting = new FittingTools();
+            var fitting = new FittingTool();
             var takeCount = (int) (PointCount * 0.1);
             takeCount = takeCount < 3 ? 3 : takeCount;
             var circle = fitting.FittingCircleWithRansac(Points.Take(takeCount).ToArray());

@@ -4,6 +4,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using NetTopologySuite.Geometries;
+using NetTopologySuite.Simplify;
 using NGeoHash;
 using QianMo.Core.Clustering;
 using QianMo.Core.Infrastructure.Data;
@@ -17,10 +19,10 @@ namespace TrackClustering
     {
         static void Main(string[] args)
         {
-             var dataReader = new DataFileReader<GeoInfoModel>();
+            var dataReader = new DataFileReader<GeoInfoModel>();
             var dir = Path.Combine(Directory.GetCurrentDirectory(), "../../../../../data/001/");
             var imgDir = Path.Combine(Directory.GetCurrentDirectory(), "img");
-            var pltFiles = FileTools.GetAllFile(dir, "*.plt");
+            var pltFiles = FileTool.GetAllFile(dir, "*.plt");
             var tracks = dataReader.GetTrajectories(pltFiles);
 
             Parallel.ForEach(tracks, t =>

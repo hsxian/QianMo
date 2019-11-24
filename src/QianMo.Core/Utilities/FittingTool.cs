@@ -8,7 +8,7 @@ using QianMo.Core.Models;
 
 namespace QianMo.Core.Utilities
 {
-    public class FittingTools
+    public class FittingTool
     {
         public CircleModel FittingCircleWithLeastSquares(double[][] points)
         {
@@ -34,7 +34,7 @@ namespace QianMo.Core.Utilities
                 XSource = midPoint[0],
                 YSource = midPoint[1],
                 R = c,
-                R_geo = GeoTools.CalculateDistance(midPoint[1], midPoint[0], b, a)
+                R_geo = GeoTool.GeoDistance(midPoint[1], midPoint[0], b, a)
             };
             return result;
         }
@@ -52,7 +52,7 @@ namespace QianMo.Core.Utilities
                 XSource = midPoint[0],
                 YSource = midPoint[1],
                 R = circle.Radius,
-                R_geo = GeoTools.CalculateDistance(midPoint[1], midPoint[0], circle.Origin.Y, circle.Origin.X)
+                R_geo = GeoTool.GeoDistance(midPoint[1], midPoint[0], circle.Origin.Y, circle.Origin.X)
             };
             return result;
         }

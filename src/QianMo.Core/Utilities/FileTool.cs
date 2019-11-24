@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace QianMo.Core.Utilities
 {
-    public class FileTools
+    public class FileTool
     {
         public static IEnumerable<string> GetAllFile(string dir, string searchPattern = "*")
         {

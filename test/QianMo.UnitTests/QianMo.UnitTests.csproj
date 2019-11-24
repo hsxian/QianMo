@@ -2,7 +2,6 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
-
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
@@ -14,10 +13,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\QianMo.Core\QianMo.Core.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Clustering" />
     </ItemGroup>
 
 </Project>
