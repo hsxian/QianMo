@@ -2,7 +2,7 @@
 
 namespace QianMo.Core.Models
 {
-    public class GeoInfoModel:IGeoInfoModel
+    public class GeoInfoModel : IGeoInfoModel
     {
         public float Latitude { get; set; }
         public float Longitude { get; set; }

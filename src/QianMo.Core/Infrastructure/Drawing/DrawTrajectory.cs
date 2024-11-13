@@ -6,7 +6,7 @@ namespace QianMo.Core.Infrastructure.Drawing
 {
     public static class DrawTrajectory
     {
-        public static DrawBase Draw(this DrawBase drawer, Trajectory trajectory, Color color, float width)
+        public static DrawBase Draw<TGeoCode>(this DrawBase drawer, Trajectory<TGeoCode> trajectory, Color color, float width)
         {
             var draw = Graphics.FromImage(drawer.Image);
             var points = trajectory.GeoPoints.ToList().Select(t =>

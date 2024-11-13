@@ -20,14 +20,16 @@ namespace TrackClustering
         static void Main(string[] args)
         {
             var dataReader = new DataFileReader<GeoInfoModel>();
-            var dir = Path.Combine(Directory.GetCurrentDirectory(), "../../../../../data/001/");
+            var dir = Path.Combine(Directory.GetCurrentDirectory(), "../../../../../data");
             var imgDir = Path.Combine(Directory.GetCurrentDirectory(), "img");
             var pltFiles = FileTool.GetAllFile(dir, "*.plt");
-            var tracks = dataReader.GetTrajectories(pltFiles);
+            var tracks = dataReader.GetTrajectories<string>(pltFiles);
 
             Parallel.ForEach(tracks, t =>
             {
+                //numberOfChars=7
                 t.GeoCodes = t.GeoPoints.Select(tt => GeoHash.Encode(tt.Latitude, tt.Longitude, 7))
+                //t.GeoCodes = t.GeoPoints.Select(tt => GeoHash.EncodeInt(tt.Latitude, tt.Longitude, 35))
                     .Distinct()
                     .ToList();
             });
@@ -35,7 +37,7 @@ namespace TrackClustering
 
             Console.WriteLine(tracks.Count());
 
-            var cluster = new CommonSubsequenceCluster();
+            var cluster = new CommonSubsequenceCluster<string>();
             var sh = new Stopwatch();
             sh.Start();
             var tree = cluster.BuildClusterTree(tracks.ToArray(), 0.7f, 0.4f);

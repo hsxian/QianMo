@@ -6,46 +6,53 @@ using QianMo.Core.Models;
 
 namespace QianMo.Core.Clustering
 {
-    public class CommonSubsequenceCluster : ICommonSubsequenceCluster
+    public class CommonSubsequenceCluster<TGeoCode> : ICommonSubsequenceCluster<TGeoCode>
     {
-        public IEnumerable<Trajectory> BuildClusterTree(IEnumerable<Trajectory> trajectories, float scaleSimilar = 0.8f,
+        public IEnumerable<Trajectory<TGeoCode>> BuildClusterTree(IEnumerable<Trajectory<TGeoCode>> trajectories, float scaleSimilar = 0.8f,
             float scaleBlood = 0.6f)
         {
             var array = trajectories.OrderByDescending(t => t.GeoCodes.Count).ToArray();
+            var length = array.Length;
 
-            for (var ibf = 0; ibf < array.Length; ibf++)
+            for (var i = 0; i < length; i++)
             {
-                Parallel.For(ibf + 1, array.Length, jaf =>
+                var ft = array[i];
+                Parallel.For(i + 1, length, j =>
                 {
-                    if (array[jaf].Level == 1) return;
+                    var ct = array[j];
+                    var uid = $"{i}_{j}";
+                    if (ct.Level == 1 
+                    || ft.DoRectanglesIntersect(ct) == false
+                    ) return;
 
-                    var intersect = array[ibf].GeoCodes.Intersect(array[jaf].GeoCodes).ToList();
-                    var intersectCount = (float) intersect.Count;
-                    var rateIbf = intersectCount / array[ibf].GeoCodes.Count;
-                    var rateJaf = intersectCount / array[jaf].GeoCodes.Count;
+                    var intersect = ft.GeoCodes.Intersect(ct.GeoCodes).ToList();
+                    var intersectCount = (float)intersect.Count;
+                    var rateIbf = intersectCount / ft.GeoCodes.Count;
+                    var rateJaf = intersectCount / ct.GeoCodes.Count;
 
                     if (rateIbf >= scaleSimilar && rateJaf >= scaleSimilar)
                     {
-                        array[jaf].Level = 1;
-                        array[ibf].Siblings.Add(array[jaf]);
-                        array[jaf].Siblings.Add(array[ibf]);
+                        ct.Level = 1;
+                        ft.Siblings.Add(ct);
+                        ct.Siblings.Add(ft);
                     }
                     else if (rateJaf > rateIbf && rateIbf >= scaleBlood)
                     {
-                        array[jaf].Level = 1;
-                        array[jaf].Parent = array[ibf];
-                        array[ibf].Children.Add(array[jaf]);
+                        ct.Level = 1;
+                        ct.Parent = ft;
+                        ft.Children.Add(ct);
                     }
                     else if (rateIbf > rateJaf && rateJaf >= scaleBlood)
                     {
-                        array[ibf].Level = 1;
-                        array[ibf].Parent = array[jaf];
-                        array[jaf].Children.Add(array[ibf]);
+                        ft.Level = 1;
+                        ft.Parent = ct;
+                        ct.Children.Add(ft);
                     }
                 });
+                Console.WriteLine($"BuildClusterTree:{i}/{length}");
             }
 
-            var root = array.Where(t => t.Level == 0 ).ToList();
+            var root = array.Where(t => t.Level == 0).ToList();
 
             SetClusterTreeLevelInfo(root);
 
@@ -53,7 +60,7 @@ namespace QianMo.Core.Clustering
         }
 
 
-        private void SetClusterTreeLevelInfo(IEnumerable<Trajectory> tree, int level = 0, string levelTag = "")
+        private void SetClusterTreeLevelInfo(IEnumerable<Trajectory<TGeoCode>> tree, int level = 0, string levelTag = "")
         {
             Parallel.For(0, tree.Count(), i =>
             {
@@ -73,7 +80,7 @@ namespace QianMo.Core.Clustering
             });
         }
 
-        public void ForeachTree(IEnumerable<Trajectory> tree, Action<Trajectory> action)
+        public void ForeachTree(IEnumerable<Trajectory<TGeoCode>> tree, Action<Trajectory<TGeoCode>> action)
         {
             foreach (var node in tree)
             {

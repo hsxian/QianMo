@@ -4,11 +4,11 @@ using QianMo.Core.Models;
 
 namespace QianMo.Core.Clustering
 {
-    public interface ICommonSubsequenceCluster
+    public interface ICommonSubsequenceCluster<TGeoCode>
     {
-        IEnumerable<Trajectory> BuildClusterTree(IEnumerable<Trajectory> trajectories, float scaleSimilar = 0.8f,
+        IEnumerable<Trajectory<TGeoCode>> BuildClusterTree(IEnumerable<Trajectory<TGeoCode>> trajectories, float scaleSimilar = 0.8f,
             float scaleBlood = 0.6f);
 
-        void ForeachTree(IEnumerable<Trajectory> tree, Action<Trajectory> action);
+        void ForeachTree(IEnumerable<Trajectory<TGeoCode>> tree, Action<Trajectory<TGeoCode>> action);
     }
 }
