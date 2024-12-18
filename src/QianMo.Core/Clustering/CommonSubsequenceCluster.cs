@@ -8,7 +8,7 @@ namespace QianMo.Core.Clustering
 {
     public class CommonSubsequenceCluster<TGeoCode> : ICommonSubsequenceCluster<TGeoCode>
     {
-        public IEnumerable<Trajectory<TGeoCode>> BuildClusterTree(IEnumerable<Trajectory<TGeoCode>> trajectories, float scaleSimilar = 0.8f,
+        public IEnumerable<TrajectoryWithCode<TGeoCode>> BuildClusterTree(IEnumerable<TrajectoryWithCode<TGeoCode>> trajectories, float scaleSimilar = 0.8f,
             float scaleBlood = 0.6f)
         {
             var array = trajectories.OrderByDescending(t => t.GeoCodes.Count).ToArray();
@@ -21,7 +21,7 @@ namespace QianMo.Core.Clustering
                 {
                     var ct = array[j];
                     var uid = $"{i}_{j}";
-                    if (ct.Level == 1 
+                    if (ct.Level == 1
                     || ft.DoRectanglesIntersect(ct) == false
                     ) return;
 
@@ -60,7 +60,7 @@ namespace QianMo.Core.Clustering
         }
 
 
-        private void SetClusterTreeLevelInfo(IEnumerable<Trajectory<TGeoCode>> tree, int level = 0, string levelTag = "")
+        private void SetClusterTreeLevelInfo(IEnumerable<TrajectoryWithCode<TGeoCode>> tree, int level = 0, string levelTag = "")
         {
             Parallel.For(0, tree.Count(), i =>
             {
@@ -80,7 +80,7 @@ namespace QianMo.Core.Clustering
             });
         }
 
-        public void ForeachTree(IEnumerable<Trajectory<TGeoCode>> tree, Action<Trajectory<TGeoCode>> action)
+        public void ForeachTree(IEnumerable<TrajectoryWithCode<TGeoCode>> tree, Action<TrajectoryWithCode<TGeoCode>> action)
         {
             foreach (var node in tree)
             {

@@ -8,5 +8,10 @@ namespace QianMo.Core.Models
         public float Longitude { get; set; }
         public float Altitude { get; set; }
         public DateTime Time { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Time:yyyy-MM-dd HH:mm:ss}:{Longitude},{Latitude},{Altitude}";
+        }
     }
 }

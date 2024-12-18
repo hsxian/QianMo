@@ -1,0 +1,1 @@
+dotnet publish -r linux-x64 --self-contained -p:PublishSingleFile=false -c realse -o SpatioTemporalCoexistence.WebApi-publish_linux
